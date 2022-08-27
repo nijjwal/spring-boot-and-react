@@ -41,7 +41,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") int id) {
 		Employee employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found:" + id));
 
@@ -49,7 +49,7 @@ public class EmployeeController {
 	}
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long id,
+	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") int id,
 			@RequestBody Employee employee) {
 
 		Employee employeeToUpdate = this.employeeRepository.findById(id).orElseThrow(
@@ -77,7 +77,7 @@ public class EmployeeController {
 	
 	
 	@DeleteMapping("/employees/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable(value = "id") int id) {
 
 		Employee employeeToDelete = this.employeeRepository.findById(id).orElseThrow(
 

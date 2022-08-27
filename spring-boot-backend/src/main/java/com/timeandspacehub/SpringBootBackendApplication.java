@@ -9,13 +9,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.timeandspacehub.model.EmpHealthInsurance;
 import com.timeandspacehub.model.EmpHealthInsuranceIdentity;
+import com.timeandspacehub.model.Employee;
 import com.timeandspacehub.repository.EmpHealthInsuranceRepository;
+import com.timeandspacehub.repository.EmployeeRepository;
 
 @SpringBootApplication
 public class SpringBootBackendApplication implements CommandLineRunner {
 
 	@Autowired
-	private EmpHealthInsuranceRepository employeeRepository;
+	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	private EmpHealthInsuranceRepository empHealthInsuranceRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootBackendApplication.class, args);
@@ -24,19 +29,27 @@ public class SpringBootBackendApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// Cleanp up all the tables
-		// employeeRepository.deleteAllInBatch();
+		//Sample One-to-Many Relationship - STARTS
+		
+		// 1. Cleanup all the data in both EMPLOYEES and EMP_HEALTH_INSURANCE table in
+		// proper order.
+		empHealthInsuranceRepository.deleteAllInBatch();
+		employeeRepository.deleteAllInBatch();
 
-		// Create object and insert in db
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		// 2. Create new employee for EMPLOYEES table and insert in db
+		Employee newEmp = new Employee("Chuck", "Norris", "chucknorris@gmail.com");
+		Employee savedEmployee = employeeRepository.save(newEmp);
+
+		// 3. Set Composite Key Value for EMP_HEALTH_INSURANCE table.
+		EmpHealthInsuranceIdentity pk = new EmpHealthInsuranceIdentity(savedEmployee.getId(), 123456, 1);
+		Timestamp currDateAndTime = new Timestamp(System.currentTimeMillis());
+
+		// 4. Create new record in EMP_HEALTH_INSURANCE table for the newly created
+		// Employee
+		EmpHealthInsurance empHealthInsurance = new EmpHealthInsurance(pk, currDateAndTime, "Cobra", 150.50, 10.50);
+		empHealthInsuranceRepository.save(empHealthInsurance);
 		
-		//Set Composite Key Value 
-		EmpHealthInsuranceIdentity pk = new EmpHealthInsuranceIdentity(24, 123456, 1);
-		
-		//Create record for EMP_HEALTH_INSURANCE table.
-		EmpHealthInsurance empHealthInsurance = new EmpHealthInsurance(pk, timestamp,
-				"Cobra", 150.50, 10.50);
-		employeeRepository.save(empHealthInsurance);
+		//Sample One-to-Many Relationship - ENDS
 
 	}
 
