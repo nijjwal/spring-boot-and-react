@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.timeandspacehub.dto.HealthInsuranceRequest;
+import com.timeandspacehub.dto.HealthInsuranceResponse;
 import com.timeandspacehub.exception.ResourceNotFoundException;
 import com.timeandspacehub.model.Employee;
+import com.timeandspacehub.repository.EmpHealthInsuranceRepository;
 import com.timeandspacehub.repository.EmployeeRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,8 +30,12 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	
+	@Autowired
+	private EmpHealthInsuranceRepository empHealthInsuranceRepository;
 
-	// get all emplooyee
+	// get all employees
 
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployees() {
@@ -91,5 +98,15 @@ public class EmployeeController {
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+	
+	@PostMapping("/employees/saveinsuranceinfo")
+	public Employee saveInsuranceInfo(@RequestBody HealthInsuranceRequest request) {
+		return employeeRepository.save(request.getEmployee());
+	}
+	
+    @GetMapping("/employees/jql/{id}")
+    public List<HealthInsuranceResponse> getJoinInformation(@PathVariable (value="id") int id){
+        return employeeRepository.getBasicHealthInfo(id);
+    }
 
 }

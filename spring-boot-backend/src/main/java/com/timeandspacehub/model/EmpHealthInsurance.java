@@ -5,13 +5,17 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "emp_health_insurance")
+@Table(name = "emphealthinsurance")
 public class EmpHealthInsurance {
 
 	@EmbeddedId
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private EmpHealthInsuranceIdentity compositeKey;
 
 	@Column(name = "health_ins_start_date")
@@ -29,10 +33,11 @@ public class EmpHealthInsurance {
 	public EmpHealthInsurance() {
 		
 	}
-
+	
 	public EmpHealthInsurance(EmpHealthInsuranceIdentity compositeKey, Timestamp startDate, String planName,
 			double compContribution, double monthlyFee) {
 		super();
+		
 		this.compositeKey = compositeKey;
 		this.startDate = startDate;
 		this.planName = planName;

@@ -11,8 +11,8 @@ public class EmpHealthInsuranceIdentity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "emp_id")
-	int empId;
+	@Column(name = "empid", nullable=true)
+	int empid;
 
 	@Column(name = "health_ins_id")
 	int insuranceId;
@@ -26,17 +26,17 @@ public class EmpHealthInsuranceIdentity implements Serializable {
 
 	public EmpHealthInsuranceIdentity(int empId, int insuranceId, int providerId) {
 		super();
-		this.empId = empId;
+		this.empid = empId;
 		this.insuranceId = insuranceId;
 		this.providerId = providerId;
 	}
 
 	public int getEmpId() {
-		return empId;
+		return empid;
 	}
 
 	public void setEmpId(int empId) {
-		this.empId = empId;
+		this.empid = empId;
 	}
 
 	public int getInsuranceId() {
@@ -61,7 +61,7 @@ public class EmpHealthInsuranceIdentity implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(empId, insuranceId, providerId);
+		return Objects.hash(empid, insuranceId, providerId);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class EmpHealthInsuranceIdentity implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		EmpHealthInsuranceIdentity other = (EmpHealthInsuranceIdentity) obj;
-		return empId == other.empId && insuranceId == other.insuranceId && providerId == other.providerId;
+		return empid == other.empid && insuranceId == other.insuranceId && providerId == other.providerId;
 	}
 
 }
