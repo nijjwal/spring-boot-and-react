@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>Insert title here</title>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>EMPLOYEE REGISTER PAGE</h3>
+			</div>
+			
+			
+			
+			<div class="card-body">
+			
+			
+				<form th:action="@{/employee/save}" method="POST" th:object="${employee}">
+					<div class="row">
+						<div class="col-2">
+							<label>First NAME</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{firstName}" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-2">
+							<label>Last Name</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{lastName}" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-2">
+
+							<label>Email Id:</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{emailId}" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-2">
+							<label>VERIFY</label>
+						</div>
+						<div class="col-4">
+							<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY">
+							</div>
+						</div>
+					</div>
+					
+					<input type="submit" value="Add Employee" class="btn btn-success" />
+					| <a th:href="@{/employee/all}" class="btn btn-info">VIEW ALL</a>
+				</form>
+				
+				
+				<br />
+				<div th:if="${message!=null}">
+					<span class="alert alert-danger" th:text="${message}"></span>
+				</div>
+			</div>
+			
+			
+			
+			
+		</div>
+	</div>
+</body>
+
+</html>
