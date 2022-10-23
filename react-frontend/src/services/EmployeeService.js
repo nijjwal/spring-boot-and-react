@@ -1,5 +1,5 @@
 import axios from 'axios';
- 
+//online bad practice - merge conflict testing 
 const EMPLOYEE_API_BASE_URL = 'http://localhost:8080/api/v1/employees';
 
 class  EmployeeService{
